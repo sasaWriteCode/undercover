@@ -193,7 +193,6 @@ function updateRevealCard(){
     const word = p.role==="CIV" ? state.civilianWord : p.role==="UND" ? state.undercoverWord : "(no word)";
     els.revealContent.innerHTML = `
       <div class="revealInner">
-        <p class="revealRole">You are: <b>${roleText}</b></p>
         <p class="revealWord">${word}</p>
         <button id="btnHide" class="btn ghost" style="margin-top:10px">Hide</button>
       </div>`;
