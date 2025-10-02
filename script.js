@@ -394,5 +394,44 @@ els.importFile.onchange = (e)=>{
   r.readAsText(f);
 };
 
+// ---------- Reset Game ----------
+els.btnResetGame = $("#btnResetGame");
+els.btnResetGame.onclick = ()=>{
+  if(!confirm("Reset and start a new game?")) return;
+
+  // Clear state
+  state.gameName = "";
+  state.civilianWord = "";
+  state.undercoverWord = "";
+  state.numUndercover = 1;
+  state.numWhite = 1;
+  state.players = [];
+  state.assigned = false;
+  state.useRandomPair = false;
+  state.wordPairs = [];
+  state.votes = {};
+  clearInterval(state.timers.handle);
+
+  // Reset UI
+  els.gameName.value = "";
+  els.wordCivilian.value = "";
+  els.wordUndercover.value = "";
+  els.numUndercover.value = 1;
+  els.numWhite.value = 1;
+  els.assignSummary.textContent = "";
+  els.aliveList.innerHTML = "";
+  els.votePanel.innerHTML = "";
+  $("#log").innerHTML = "";
+
+  renderPlayers();
+
+  // Go back to setup
+  els.setup.classList.remove("hidden");
+  els.reveal.classList.add("hidden");
+  els.round.classList.add("hidden");
+
+  showModal("Game Reset","You can now set up a new game!");
+};
+
 // ---------- Helpers on load ----------
 renderPlayers();
