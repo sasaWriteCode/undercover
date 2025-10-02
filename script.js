@@ -433,5 +433,40 @@ els.btnResetGame.onclick = ()=>{
   showModal("Game Reset","You can now set up a new game!");
 };
 
+els.btnNewGameKeep = $("#btnNewGameKeep");
+// ---------- New Game while keeping players ----------
+els.btnNewGameKeep.onclick = ()=>{
+  if(!confirm("Start a new game with the same players?")) return;
+
+  // Keep: players list & impostor counts & word pairs (optional)
+  // Reset: alive flags, roles, votes, timers, words, assigned flag, logs
+  state.players.forEach(p=>{ p.alive = true; p.role = null; });
+
+  state.assigned = false;
+  state.votes = {};
+  clearInterval(state.timers.handle);
+
+  // Clear current words so host will enter new ones (you can comment these two lines if you want to keep last words)
+  state.civilianWord = "";
+  state.undercoverWord = "";
+
+  // UI resets
+  els.wordCivilian.value = "";
+  els.wordUndercover.value = "";
+  els.assignSummary.textContent = "";
+  els.aliveList.innerHTML = "";
+  els.votePanel.innerHTML = "";
+  $("#log").innerHTML = "";
+  els.timer.textContent = "00:00";
+
+  // Go back to Step 1 but keep players & impostor counts on screen
+  renderPlayers();
+  els.setup.classList.remove("hidden");
+  els.reveal.classList.add("hidden");
+  els.round.classList.add("hidden");
+
+  showModal("New Game","Players kept. Enter new words and click ‘Assign Roles’.");  
+};
+
 // ---------- Helpers on load ----------
 renderPlayers();
