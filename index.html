@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Undercover Word Party – Host</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+  <h1>Undercover Word Party</h1>
+  <p class="sub">Custom words • Unlimited players • Custom impostors</p>
+</header>
+
+<main>
+  <!-- SETUP PANEL -->
+  <section id="setup" class="card">
+    <h2>1) Game Setup</h2>
+
+    <div class="grid">
+      <label>Game Name
+        <input id="gameName" placeholder="Friday Night – Team A" />
+      </label>
+
+      <label>Civilian Word
+        <input id="wordCivilian" placeholder="e.g., Cat" />
+      </label>
+
+      <label>Undercover Word
+        <input id="wordUndercover" placeholder="e.g., Tiger" />
+      </label>
+
+      <label>Undercovers (#)
+        <input id="numUndercover" type="number" min="0" value="1" />
+      </label>
+
+      <label>Mr. Whites (#)
+        <input id="numWhite" type="number" min="0" value="1" />
+      </label>
+    </div>
+
+    <details>
+      <summary>Optional: Add multiple word pairs (pick randomly)</summary>
+      <div id="pairManager">
+        <div class="pairRow">
+          <input class="pairCiv" placeholder="Civilian word" />
+          <input class="pairUnd" placeholder="Undercover word" />
+          <button class="btn ghost addPair">＋</button>
+        </div>
+        <p class="hint">Add as many pairs as you like. If you tick “Use random pair” below, the app will pick one each game.</p>
+      </div>
+      <label class="inline">
+        <input type="checkbox" id="useRandomPair" />
+        Use random pair from the list above
+      </label>
+    </details>
+
+    <hr />
+
+    <h3>Players</h3>
+    <div id="players"></div>
+    <div class="row">
+      <input id="playerInput" placeholder="Type a name and hit Add" />
+      <button id="addPlayer" class="btn">Add</button>
+      <button id="addQuick" class="btn ghost">Add 8 sample</button>
+      <button id="clearPlayers" class="btn danger ghost">Clear</button>
+    </div>
+
+    <div class="row wrap">
+      <button id="randomize" class="btn primary">2) Assign Roles</button>
+      <span id="assignSummary" class="pill"></span>
+    </div>
+  </section>
+
+  <!-- REVEAL PANEL -->
+  <section id="reveal" class="card hidden">
+    <h2>3) Secret Reveal (Pass-and-Play)</h2>
+    <p class="hint">Pass the device. Each player taps “Reveal” to see their role, then “Hide” and hand it over.</p>
+
+    <div id="revealBox" class="revealBox">
+      <div id="revealName" class="revealName">Player</div>
+      <div id="revealContent" class="revealContent">
+        <button id="btnReveal" class="btn xl">Reveal</button>
+      </div>
+      <div class="revealFooter">
+        <button id="btnPrev" class="btn ghost">⟵ Prev</button>
+        <div id="revealStep">1 / 1</div>
+        <button id="btnNext" class="btn">Next ⟶</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <button id="toRound" class="btn primary">Start Round</button>
+    </div>
+  </section>
+
+  <!-- ROUND PANEL -->
+  <section id="round" class="card hidden">
+    <h2>4) Round Control</h2>
+
+    <div class="row wrap">
+      <button id="btnDescribe" class="btn">Description Timer 30s</button>
+      <button id="btnDiscuss" class="btn ghost">Discussion Timer 90s</button>
+      <button id="btnResetTimers" class="btn ghost">Reset Timers</button>
+      <div id="timer" class="timer">00:30</div>
+    </div>
+
+    <h3>Alive Players</h3>
+    <div id="aliveList" class="chips"></div>
+
+    <h3>Vote to Eliminate</h3>
+    <div id="votePanel"></div>
+    <div class="row wrap">
+      <button id="btnTally" class="btn primary">Tally Votes</button>
+      <button id="btnClearVotes" class="btn ghost">Clear Votes</button>
+    </div>
+
+    <div id="log" class="log"></div>
+  </section>
+
+  <!-- MODALS -->
+  <dialog id="modalWhiteGuess">
+    <form method="dialog">
+      <h3>Mr. White Guess</h3>
+      <p>If this eliminated player is Mr. White, they may guess the Civilian word once. Exact match wins instantly.</p>
+      <input id="whiteGuessInput" placeholder="Type your guess" />
+      <menu>
+        <button value="cancel" class="btn ghost">Cancel</button>
+        <button id="whiteGuessConfirm" value="ok" class="btn">Confirm Guess</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <dialog id="modalMessage">
+    <form method="dialog">
+      <h3 id="msgTitle">Message</h3>
+      <p id="msgBody"></p>
+      <menu>
+        <button class="btn">OK</button>
+      </menu>
+    </form>
+  </dialog>
+</main>
+
+<footer>
+  <span>Made for party play • No sign-in, no backend</span>
+  <a href="#" id="btnExport">Export Game State</a>
+  <a href="#" id="btnImport">Import</a>
+  <input type="file" id="importFile" accept="application/json" hidden />
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
